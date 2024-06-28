@@ -4,7 +4,6 @@
     @include('admin.css')
   </head>
   <body>
-    kkk
     
     @include('admin.header')
 
