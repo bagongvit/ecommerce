@@ -32,6 +32,13 @@
             text-align: center;
             color: white;
         }
+
+        input[type='search']
+        {
+            width: 500px;
+            height: 40px;
+            margin-left: 50px;
+        }
     </style>
 </head>
 <body>
@@ -44,6 +51,12 @@
         <div class="page-header">
         <div class="container-fluid">
 
+            <form action="{{ url('product_search') }}" method="get">
+                @csrf
+                <input type="search" name="search">
+                <input type="submit" class="btn btn-secondary" value="Search">
+            </form>
+
             <div class="div_deg">
                 <table class="table_deg">
                     <tr>
@@ -53,6 +66,7 @@
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Image</th>
+                        <th>Edit</th>
                         <th>Delete</th>
                     </tr>
 
@@ -60,13 +74,19 @@
                     
                     <tr>
                         <td>{{ $products->title }}</td>
-                        <td>{!!Str::limit($products->description,40)!!}</td>
+                        <td>{!!Str::limit($products->description,30)!!}</td>
                         <td>{{ $products->category }}</td>
                         <td>{{ $products->price }}</td>
                         <td>{{ $products->quantity }}</td>
+
                         <td>
                             <img height="120" width="120" src="products/{{ $products->image }}">
                         </td>
+
+                        <td>
+                            <a class="btn btn-success" href="{{ url('update_product', $products->id) }}">Edit</a>
+                        </td>
+
                         <td>
                             <a class="btn btn-danger" onclick="confirmation(event)" href="{{ url('delete_product', $products->id) }}">Delete</a>
                         </td>

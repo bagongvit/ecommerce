@@ -36,7 +36,7 @@
             
               <!-- end contact section -->
             
-               @include('home.contact')
+              @include('home.contact')
             
               <!-- info section -->
             
