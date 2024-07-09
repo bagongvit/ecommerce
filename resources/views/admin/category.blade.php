@@ -103,6 +103,8 @@
         </div>
     </div>
     </div>
+
+    @include('admin.footer')
     
     @include('admin.js')
 </body>

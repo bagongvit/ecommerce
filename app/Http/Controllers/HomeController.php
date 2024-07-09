@@ -18,7 +18,15 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('admin.index');
+        $user = User::where('usertype', 'user')->get()->count();
+
+        $product = Product::all()->count();
+
+        $order = Order::all()->count();
+
+        $deliverd = Order::where('status', 'Delivered')->get()->count();
+
+        return view('admin.index', compact('user', 'product', 'order', 'deliverd'));
     }
 
 
@@ -130,8 +138,49 @@ class HomeController extends Controller
 
         $phone = $request->phone;
 
-        
+        $userid = Auth::user()->id;
 
-        $order = new Order;
+        $cart = Cart::where('user_id', $userid)->get();
+
+        foreach($cart as $carts)
+        {
+            $order = new Order;
+
+            $order->name = $name;
+
+            $order->rec_address = $address;
+
+            $order->phone = $phone;
+
+            $order->user_id = $userid;
+
+            $order->product_id = $carts->product_id;
+
+            $order->save();
+
+        }
+
+        $cart_remove = Cart::where('user_id', $userid)->get();
+        
+        foreach($cart_remove as $remove)
+        {
+            $data = Cart::find($remove->id);
+            $data->delete();
+        }
+
+        toastr()->timeOut(10000)->closeButton()->addSuccess('Product Ordered Successfully');
+        
+        return redirect()->back();
+    }
+
+    public function myorders()
+    {
+        $user = Auth::user()->id;
+
+        $count = Cart::where('user_id', $user)->get()->count();
+
+        $order = Order::where('user_id', $user)->get();
+
+        return view('home.order', compact('count', 'order'));
     }
 }

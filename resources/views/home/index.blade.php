@@ -24,12 +24,6 @@
             
               <!-- end shop section -->
             
-            
-            
-            
-            
-            
-            
               <!-- contact section -->
             
               
@@ -43,7 +37,5 @@
               @include('home.footer')
             
             </body>
-            
-            </html></h1>
 
 </html>

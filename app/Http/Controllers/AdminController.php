@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 
 use App\Models\Category;
 
+use App\Models\Order;
+
 use App\Models\Product;
+
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminController extends Controller
 {
@@ -173,4 +177,50 @@ class AdminController extends Controller
 
         return view('admin.view_product', compact('product'));
     }
+
+    public function view_order()
+    {
+        $data = Order::all();
+        return view('admin.order', compact('data'));
+    }
+
+    public function on_the_way($id)
+    {
+        $data = Order::find($id);
+
+        $data->status = 'On the way';
+
+        $data->save();
+
+        return redirect('/view_orders');
+    }
+
+    public function delivered($id)
+    {
+        $data = Order::find($id);
+
+        $data->status = 'Delivered';
+
+        $data->save();
+
+        return redirect('/view_orders');
+    }
+
+    public function print_pdf($id)
+    {
+        $data = Order::find($id);
+    
+        // Pastikan data order ditemukan
+        if (!$data) {
+        abort(404, 'Order not found');
+        }
+    
+        // Buat nama file berdasarkan nama customer
+        $fileName = str_replace(' ', '_', $data->name) . '_invoice.pdf';
+    
+        $pdf = Pdf::loadView('admin.invoice', compact('data'));
+
+        return $pdf->download($fileName);
+    }
+
 }
