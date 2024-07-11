@@ -9,8 +9,10 @@
         "barryvdh/laravel-dompdf": "^2.2",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
+        "midtrans/midtrans-php": "^2.5",
         "php-flasher/flasher-toastr-laravel": "^2.0",
-        "php-flasher/flasher-toastr-symfony": "^2.0"
+        "php-flasher/flasher-toastr-symfony": "^2.0",
+        "stripe/stripe-php": "^15.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
